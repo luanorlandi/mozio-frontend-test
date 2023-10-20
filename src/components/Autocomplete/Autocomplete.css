@@ -1,0 +1,50 @@
+.autocomplete {
+  position: relative;
+}
+
+.autocomplete__label {
+  display: flex;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.autocomplete__input {
+  width: 100%;
+  padding: 5px;
+}
+
+.autocomplete__menu {
+  background-color: white;
+  color: black;
+  padding: 8px;
+  max-height: 100px;
+  overflow: auto;
+  position: absolute;
+  width: calc(100% - 18px);
+  margin-top: 4px;
+  border: 1px solid;
+}
+
+.autocomplete__menu-loading {
+  display: flex;
+  align-items: center;
+}
+
+.autocomplete__error {
+  color: red;
+  margin-top: 4px;
+}
+
+.autocomplete__menu-item {
+  padding: 4px 4px;
+  display: flex;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.autocomplete__menu-item:hover {
+  background-color: lightgray;
+}

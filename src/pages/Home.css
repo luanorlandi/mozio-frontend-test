@@ -1,0 +1,15 @@
+.home {
+  min-height: 500px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.home__location-search {
+  background-color: lightgray;
+  padding: 40px;
+  border-radius: 8px;
+}
+
+.home__location-result {
+  padding: 16px;
+}

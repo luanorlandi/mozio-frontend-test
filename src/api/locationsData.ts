@@ -1,60 +1,4 @@
-# How to run
-
-Run the following commands:
-
-```
-npm install
-npm start
-```
-
-It should open the app in http://localhost:3000/
-
-# Decisions and Technology choices
-
-# The Task
-
-You are tasked with creating a React, TypeScript application for searching travel destinations. Users should be able to search for destinations and view details about them. Additionally, you will implement an algorithm to suggest nearby destinations based on the selected destination.
-
-**Requirements:**
-
-1. User Interface (UI):
-    - Create a React application with two main parts:
-    - Destination Search: Allow users to search for travel destinations by name (the data is provided).
-    - Destination Details: Display detailed information about the selected destination, including its name, description, and top 5 nearby destinations.
-    - Implement an asynchronous combobox for the destination search that fetches and displays matching destination names from a fake API.
-    - The fake API must only return the destination based on the user query, which means you cannot fetch all destinations at once.
-    - You can create a file called fake-api.ts and export the async functions as fake APIs. Please console.log the arguments of all fake API functions.
-    - Clicking on the nearby destinations should show the details of the selected destination and its nearby destinations.
-2. User Experience (UX):
-    - Implement error handling for API requests. When the user enters ‘fail’, the front end should mimic a backend error case and show an error message near Combobox.
-    - Add loading indicators during data fetching.
-    - The Combobox should be keyboard-accessible.
-3. Optional Bonus:
-    - Implement client-side caching.
-    - Debounce user input.
-    - Make use of modern accessible UI libraries.
-    - Deep link to the current state.
-
-**Submission Guidelines:**
-
-- Deploy the application and share the link.
-- Make your repository publicly accessible and share the link.
-- Include a README.md file that explains the design decisions and technology choices.
-Evaluation Criteria:
-
-Candidates will be evaluated based on the following:
-
-- Code quality and organization.
-- TypeScript usage and type safety.
-- React component structure and state management.
-- Error handling and user experience.
-- API integration and data modeling.
-- Algorithm implementation (destination recommendation).
-- Complex component implementation (async combobox).
-- Bonus features (if implemented).
-
-```
-[
+const locationsData = [
   {
     "id": 1,
     "name": "Paris, France",
@@ -255,8 +199,6 @@ Candidates will be evaluated based on the following:
     "latitude": 40.4168,
     "longitude": -3.7038
   }
-]
+];
 
-```
-
-You can find a sample of the requested app attached.
+export default locationsData;
