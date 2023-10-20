@@ -11,6 +11,13 @@ It should open the app in http://localhost:3000/
 
 # Decisions and Technology choices
 
+- CRA: used for a simple app and because the size is small. For a larger app, next or remix would be better
+- Pure CSS: same reasons as before, for simplicity and scope
+- No UI/CSS framework: there was a bonus but I ended for the basic to better demonstrate my frontend skills
+- react-query: for network state management, the hook provides the loading, error and cache as per requirement specs
+- useDebounce: for quick debounce of the user input
+- Autocomplete component: created as to be generic as possible, as it would happen in a real production app
+
 # The Task
 
 You are tasked with creating a React, TypeScript application for searching travel destinations. Users should be able to search for destinations and view details about them. Additionally, you will implement an algorithm to suggest nearby destinations based on the selected destination.
@@ -18,29 +25,29 @@ You are tasked with creating a React, TypeScript application for searching trave
 **Requirements:**
 
 1. User Interface (UI):
-    - Create a React application with two main parts:
-    - Destination Search: Allow users to search for travel destinations by name (the data is provided).
-    - Destination Details: Display detailed information about the selected destination, including its name, description, and top 5 nearby destinations.
-    - Implement an asynchronous combobox for the destination search that fetches and displays matching destination names from a fake API.
-    - The fake API must only return the destination based on the user query, which means you cannot fetch all destinations at once.
-    - You can create a file called fake-api.ts and export the async functions as fake APIs. Please console.log the arguments of all fake API functions.
-    - Clicking on the nearby destinations should show the details of the selected destination and its nearby destinations.
+   - Create a React application with two main parts:
+   - Destination Search: Allow users to search for travel destinations by name (the data is provided).
+   - Destination Details: Display detailed information about the selected destination, including its name, description, and top 5 nearby destinations.
+   - Implement an asynchronous combobox for the destination search that fetches and displays matching destination names from a fake API.
+   - The fake API must only return the destination based on the user query, which means you cannot fetch all destinations at once.
+   - You can create a file called fake-api.ts and export the async functions as fake APIs. Please console.log the arguments of all fake API functions.
+   - Clicking on the nearby destinations should show the details of the selected destination and its nearby destinations.
 2. User Experience (UX):
-    - Implement error handling for API requests. When the user enters ‘fail’, the front end should mimic a backend error case and show an error message near Combobox.
-    - Add loading indicators during data fetching.
-    - The Combobox should be keyboard-accessible.
+   - Implement error handling for API requests. When the user enters ‘fail’, the front end should mimic a backend error case and show an error message near Combobox.
+   - Add loading indicators during data fetching.
+   - The Combobox should be keyboard-accessible.
 3. Optional Bonus:
-    - Implement client-side caching.
-    - Debounce user input.
-    - Make use of modern accessible UI libraries.
-    - Deep link to the current state.
+   - Implement client-side caching.
+   - Debounce user input.
+   - Make use of modern accessible UI libraries.
+   - Deep link to the current state.
 
 **Submission Guidelines:**
 
 - Deploy the application and share the link.
 - Make your repository publicly accessible and share the link.
 - Include a README.md file that explains the design decisions and technology choices.
-Evaluation Criteria:
+  Evaluation Criteria:
 
 Candidates will be evaluated based on the following:
 

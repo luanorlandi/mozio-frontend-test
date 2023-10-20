@@ -2,16 +2,16 @@ import { useState } from "react";
 import "./Autocomplete.css";
 
 type Props = {
-  label: string,
-  placeholder?: string,
-  value: string,
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => any,
-  isError: boolean,
-  isLoading: boolean,
-  items?: Array<Object>,
-  onClickItem: (item: any) => any,
-  renderItem: (item: any) => any
-}
+  label: string;
+  placeholder?: string;
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => any;
+  isError: boolean;
+  isLoading: boolean;
+  items?: Array<Object>;
+  onClickItem: (item: any) => any;
+  renderItem: (item: any) => any;
+};
 
 const Autocomplete = ({
   label,
@@ -26,10 +26,11 @@ const Autocomplete = ({
 }: Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const showMenu = !isError && isMenuOpen && (isLoading || (items && items.length >= 0))
+  const showMenu =
+    !isError && isMenuOpen && (isLoading || (items && items.length >= 0));
 
   return (
-    <div  className="autocomplete">
+    <div className="autocomplete">
       <label className="autocomplete__label">{label}</label>
       <input
         className="autocomplete__input"
@@ -50,8 +51,12 @@ const Autocomplete = ({
       )}
       {showMenu && (
         <div className="autocomplete__menu">
-          {isLoading && <div className="autocomplete__menu-loading">Loading...</div>}
-          {!isLoading && items && items.length > 0 &&
+          {isLoading && (
+            <div className="autocomplete__menu-loading">Loading...</div>
+          )}
+          {!isLoading &&
+            items &&
+            items.length > 0 &&
             items.map((item, index) => (
               <button
                 key={index}
@@ -64,13 +69,11 @@ const Autocomplete = ({
                 {renderItem(item)}
               </button>
             ))}
-          {!isLoading && items && items.length === 0 &&
-            <span>No results</span>
-          }
+          {!isLoading && items && items.length === 0 && <span>No results</span>}
         </div>
       )}
     </div>
   );
-}
+};
 
 export default Autocomplete;
