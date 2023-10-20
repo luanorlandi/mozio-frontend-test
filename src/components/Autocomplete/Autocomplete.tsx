@@ -37,8 +37,17 @@ const Autocomplete = ({
         value={value}
         onChange={onChange}
         onFocus={() => setIsMenuOpen(true)}
+        aria-invalid={isError}
+        aria-describedby={isError ? "error-message" : undefined}
       />
-      {isError && <div className="autocomplete__error">Something went wrong</div>}
+      {isError && (
+        <div
+          className="autocomplete__error"
+          id="error-message" // for improvement, it should receive a random id, or set by prop
+        >
+          Something went wrong
+        </div>
+      )}
       {showMenu && (
         <div className="autocomplete__menu">
           {isLoading && <div className="autocomplete__menu-loading">Loading...</div>}

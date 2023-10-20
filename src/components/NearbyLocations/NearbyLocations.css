@@ -1,3 +1,18 @@
-.nearby-locations {
-  padding: 16px;
+.nearby-locations__button {
+  background-color: blue;
+  color: white;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.nearby-locations__button:hover {
+  background-color: cornflowerblue;
+}
+
+.nearby-locations__error {
+  color: red;
 }

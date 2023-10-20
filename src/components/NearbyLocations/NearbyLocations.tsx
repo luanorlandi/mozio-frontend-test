@@ -1,17 +1,38 @@
 import type { Location } from '../../types'
-import "./LocationDetails.css";
+import "./NearbyLocations.css";
 
 type Props = {
   locations?: Location[],
+  onClickLocation: (location: Location) => any,
+  isLoading?: boolean,
+  isError?: boolean,
 };
 
-const NearbyLocations = ({ locations }: Props) => {
+const NearbyLocations = ({ locations, onClickLocation, isLoading, isError }: Props) => {
+  const showResults = !isError && (!isLoading || (locations && locations.length >= 0));
+
   return (
     <div className="nearby-locations">
-      <h2>Nearby Locations</h2>
-      {locations?.map((location => (
-        <span key={location.id}>{location.name}</span>
+      <p><strong>Nearby Locations</strong></p>
+      {showResults && locations?.map((location => (
+        <button
+          key={location.id}
+          className="nearby-locations__button"
+          type="button"
+          onClick={() => onClickLocation(location)}
+        >
+          {location.name}
+        </button>
       )))}
+      {isLoading && (
+        <p>Loading...</p>
+      )}
+      {!isLoading && isError && (
+        <p className="nearby-locations__error">Something went wrong</p>
+      )}
+      {!isLoading && locations && locations.length === 0 &&
+        <p>No nearby locations found</p>
+      }
     </div>
   );
 };

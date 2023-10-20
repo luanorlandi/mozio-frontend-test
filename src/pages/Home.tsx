@@ -1,53 +1,50 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, } from "react";
 import { useQuery } from 'react-query'
+import { useDebounce } from "@uidotdev/usehooks";
 
 import type { Location } from "../types";
 import Autocomplete from "../components/Autocomplete/Autocomplete";
 import { getLocations, getNearbyLocations } from '../api/fake-api';
 import './Home.css'
 import LocationDetails from "../components/LocationDetails/LocationDetails";
+import NearbyLocations from "../components/NearbyLocations/NearbyLocations";
 
 const Home = () => {
-  const [locationsData, setLocationsData] = useState<Location[]>();
   const [searchInput, setSearchInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const debounceTimer = useRef<NodeJS.Timeout | undefined>()
+  const debouncedSearchInput = useDebounce(searchInput, 300);
+  const {
+    data: locationsData,
+    isLoading: isLoadingLocations,
+    isError: isErrorLocations,
+  } = useQuery({
+    queryKey: ['locations', debouncedSearchInput],
+    queryFn: () => getLocations(searchInput),
+    enabled: searchInput.length > 0,
+    retry: false,
+  });
   const [locationSelected, setLocationSelected] = useState<Location | undefined>();
-
-  useEffect(() => {
-    if (debounceTimer.current) {
-      clearTimeout(debounceTimer.current);
-    }
-
-    if (searchInput === '') {
-      return
-    }
-
-    debounceTimer.current = setTimeout(() => {
-      setIsLoading(true);
-      // TODO should handle proper abort when user types another search when the previous call didn't finished
-      getLocations(searchInput)
-        .then((response) => {
-          setIsLoading(false);
-          setLocationsData(response)
-        })
-        .catch(() => {
-          setIsLoading(false);
-          setIsError(true);
-        });
-    }, 300);
-  }, [searchInput]);
+  const {
+    data: nearbyLocations,
+    isLoading: isLoadingNearbyLocations,
+    isError: isErrorNearbyLocations,
+  } = useQuery({
+    queryKey: ['nearby-locations', locationSelected],
+    queryFn: () => {
+      if (locationSelected) {
+        return getNearbyLocations(locationSelected.id);
+      }
+    },
+    enabled: !!locationSelected,
+  });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(event.target.value)
-  }
+    setSearchInput(event.target.value);
+  };
 
   const handleClickItem = (location: Location) => {
-    setSearchInput(location.name)
-    setLocationSelected(location)
-    getNearbyLocations(location.latitude, location.longitude)
-  }
+    setSearchInput(location.name);
+    setLocationSelected(location);
+  };
 
   return (
     <div className="home">
@@ -57,8 +54,8 @@ const Home = () => {
           placeholder="Search for a location..."
           value={searchInput}
           onChange={handleChange}
-          isError={isError}
-          isLoading={isLoading}
+          isLoading={isLoadingLocations}
+          isError={isErrorLocations}
           items={locationsData}
           onClickItem={handleClickItem}
           renderItem={((location: Location) => location.name)}
@@ -66,7 +63,15 @@ const Home = () => {
       </div>
       <div className="home__location-result">
         {locationSelected && (
-          <LocationDetails location={locationSelected} />
+          <>
+            <LocationDetails location={locationSelected} />
+            <NearbyLocations
+              locations={nearbyLocations}
+              onClickLocation={(location) => setLocationSelected(location)}
+              isLoading={isLoadingNearbyLocations}
+              isError={isErrorNearbyLocations}
+            />
+          </>
         )}
       </div>
     </div>

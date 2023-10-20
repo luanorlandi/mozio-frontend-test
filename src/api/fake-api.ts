@@ -1,15 +1,21 @@
 import type { Location } from "../types";
 import locationsData from './locationsData'
 
-export async function getLocations (searchInput: string): Promise<Location[]> {
+export async function getLocations(searchInput: string): Promise<Location[]> {
+  console.log('getLocations args', { searchInput });
+
+  if (searchInput === 'fail') {
+    throw Error('Error');
+  };
+
   const filteredResults = locationsData.filter((location: Location) => {
     return location.name.toLowerCase().includes(searchInput.toLowerCase())
   });
-  
+
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(filteredResults)
-    }, 500)
+    }, 500);
   })
 
   // for quick testing purpose of the UI (not to be committed in a real scenario)
@@ -35,7 +41,20 @@ export async function getLocations (searchInput: string): Promise<Location[]> {
   // }])
 };
 
-export async function getNearbyLocations(latitude: number, longitude: number): Promise<Location[]> {
+export async function getNearbyLocations(locationId: number): Promise<Location[]> {
+  console.log('getNearbyLocations args', { locationId });
+
+  const locationTarget = locationsData.find((location) => locationId === location.id);
+  if (!locationTarget) {
+    // for improvement, this edge case should be an response error
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve([])
+      }, 500)
+    })
+  };
+
+  const { latitude, longitude } = locationTarget;
   const locationsDataCopy = locationsData.map(location => { return { ...location } });
   locationsDataCopy.sort((a, b) => {
     const distanceA = Math.sqrt(Math.pow(a.latitude - latitude, 2) + Math.pow(a.longitude - longitude, 2));
@@ -46,6 +65,13 @@ export async function getNearbyLocations(latitude: number, longitude: number): P
 
   return new Promise(resolve => {
     setTimeout(() => {
+      if (locationsDataCopy[0].id === locationId) {
+        // skip the location from request param
+        resolve(locationsDataCopy.slice(1, 6))
+        return;
+      }
+
+      // coverage for unexpected edge case
       resolve(locationsDataCopy.slice(0, 5))
     }, 500)
   })
